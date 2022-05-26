@@ -49,6 +49,7 @@ async function processCommit(asanaClient, commit) {
 }
 
 async function main() {
+  core.info("github.context");
   core.info(github.context);
   if (!process.env.TEST && github.context.event_name != "push") {
     core.setFailed("Action must be triggered with push event");
