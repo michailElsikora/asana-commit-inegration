@@ -10,6 +10,31 @@ This action links a Github commit with an Asana task as provided by the commit's
 
 ## Example usage
 
-uses: eithanshavit/link-asana-commit-gh-action@v1
-with:
-  asana-pat: 1/1202249710596714:2479fbc746a77535a9a0c2a740e5ac67
+Setup a Github Action:
+
+```
+name: AsanaTaskLink
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  linkAsana:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Link to Asana
+      uses: eithanshavit/asana-github-action@v1
+      with:
+        asana-pat: <your Asana private token>
+
+```
+
+Then commit with a message that contains the text:
+
+```
+ASANA: <your asana task URL>
+```
