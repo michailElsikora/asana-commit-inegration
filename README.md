@@ -37,5 +37,5 @@ jobs:
 Then, commit with a message that contains the text:
 
 ```
-ASANA: <Your Asana task URL>
+TASK: <Your Asana task URL>
 ```

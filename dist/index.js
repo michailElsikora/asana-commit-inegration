@@ -73890,7 +73890,6 @@ async function main() {
   const pushPayload = github.context.payload;
 
   let payloadCommits = pushPayload.commits;
-  payloadCommits.push(pushPayload.head_commit);
   const commits =
     process.env.COMMITS != null
       ? JSON.parse(process.env.COMMITS)
