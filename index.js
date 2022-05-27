@@ -4,18 +4,19 @@ const asana = require("asana");
 
 async function writeComment(asanaClient, taskId, comment) {
   try {
-    const task = await asanaClient.tasks.findById(taskId);
-    if (!task) {
-      core.setFailed(`Asana task ${taskId} not found!`);
-      return;
-    }
+    await asanaClient.tasks.findById(taskId);
+  } catch (error) {
+    core.setFailed("Asana task not found: " + error.message);
+    return;
+  }
 
+  try {
     await asanaClient.tasks.addComment(taskId, {
       text: comment,
     });
     core.info(`Added the commit link the Asana task ${taskId}.`);
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed("Unable to add comment to task");
     return;
   }
 }
