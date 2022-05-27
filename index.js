@@ -49,6 +49,7 @@ async function processCommit(asanaClient, commit) {
 }
 
 async function main() {
+  core.info(`github.context.eventName: ${github.context.eventName}`);
   if (github.context.eventName === "push") {
     const pushPayload = github.context.payload;
     core.info(`The head commit is: ${pushPayload.head_commit}`);
