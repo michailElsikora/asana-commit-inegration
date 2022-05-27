@@ -10059,48 +10059,6 @@ function validateKeyword(definition, throwError) {
 
 /***/ }),
 
-/***/ 5445:
-/***/ ((module) => {
-
-module.exports = function archy (obj, prefix, opts) {
-    if (prefix === undefined) prefix = '';
-    if (!opts) opts = {};
-    var chr = function (s) {
-        var chars = {
-            '│' : '|',
-            '└' : '`',
-            '├' : '+',
-            '─' : '-',
-            '┬' : '-'
-        };
-        return opts.unicode === false ? chars[s] : s;
-    };
-    
-    if (typeof obj === 'string') obj = { label : obj };
-    
-    var nodes = obj.nodes || [];
-    var lines = (obj.label || '').split('\n');
-    var splitter = '\n' + prefix + (nodes.length ? chr('│') : ' ') + ' ';
-    
-    return prefix
-        + lines.join(splitter) + '\n'
-        + nodes.map(function (node, ix) {
-            var last = ix === nodes.length - 1;
-            var more = node.nodes && node.nodes.length;
-            var prefix_ = prefix + (last ? ' ' : chr('│')) + ' ';
-            
-            return prefix
-                + (last ? chr('└') : chr('├')) + chr('─')
-                + (more ? chr('┬') : chr('─')) + ' '
-                + archy(node, prefix_, opts).slice(prefix.length + 2)
-            ;
-        }).join('')
-    ;
-};
-
-
-/***/ }),
-
 /***/ 3565:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -73872,7 +73830,6 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const asana = __nccwpck_require__(3565);
-const archy = __nccwpck_require__(5445);
 
 async function writeComment(asanaClient, taskId, comment) {
   try {
@@ -73921,8 +73878,11 @@ async function processCommit(asanaClient, commit) {
 }
 
 async function main() {
-  core.info("github.context");
-  core.info(archy(github));
+  if (github.context.eventName === "push") {
+    const pushPayload = github.context.payload;
+    core.info(`The head commit is: ${pushPayload.head_commit}`);
+  }
+
   if (!process.env.TEST && github.context.event_name != "push") {
     core.setFailed("Action must be triggered with push event");
     return;

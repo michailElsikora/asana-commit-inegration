@@ -1,8 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const asana = require("asana");
-const archy = require("archy");
-const { PushEvent } = require("@octokit/webhooks-definitions/schema");
 
 async function writeComment(asanaClient, taskId, comment) {
   try {
@@ -51,9 +49,9 @@ async function processCommit(asanaClient, commit) {
 }
 
 async function main() {
-  if (github.context.eventName === 'push') {
-    const pushPayload = github.context.payload as PushEvent
-    core.info(`The head commit is: ${pushPayload.head_commit}`)
+  if (github.context.eventName === "push") {
+    const pushPayload = github.context.payload;
+    core.info(`The head commit is: ${pushPayload.head_commit}`);
   }
 
   if (!process.env.TEST && github.context.event_name != "push") {
