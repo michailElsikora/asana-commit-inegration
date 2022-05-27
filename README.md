@@ -33,7 +33,7 @@ jobs:
 
 ```
 
-Then, commit with a message that contains the text:
+Then commit with a message that contains the text:
 
 ```
 ASANA: <your asana task URL>

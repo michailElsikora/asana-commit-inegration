@@ -1,12 +1,13 @@
 {
   "name": "link-asana-commit-gh-action",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "A Github action to link a pushed commit to an Asana task",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint .",
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest",
+    "build": "npm run lint && npm run prepare",
     "all": "npm run lint && npm run prepare && npm run test"
   },
   "repository": {

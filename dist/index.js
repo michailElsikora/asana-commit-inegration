@@ -73835,14 +73835,14 @@ async function writeComment(asanaClient, taskId, comment) {
   try {
     const task = await asanaClient.tasks.findById(taskId);
     if (!task) {
-      core.setFailed("Asana task not found!");
+      core.setFailed(`Asana task ${taskId} not found!`);
       return;
     }
 
     await asanaClient.tasks.addComment(taskId, {
       text: comment,
     });
-    core.info("Added the commit link the Asana task.");
+    core.info(`Added the commit link the Asana task ${taskId}.`);
   } catch (error) {
     core.setFailed(error.message);
     return;
@@ -73865,6 +73865,7 @@ function extractTaskID(commitMessage) {
       return m.groups.task;
     }
   }
+  return null;
 }
 
 async function processCommit(asanaClient, commit) {
@@ -73873,7 +73874,7 @@ async function processCommit(asanaClient, commit) {
   if (taskId) {
     writeComment(asanaClient, taskId, "Referenced by: " + commit.url);
   } else {
-    core.info(`Invalid Asana task URL provided`);
+    core.notice(`No Asana task URL provided in commit message.`);
   }
 }
 
@@ -73886,8 +73887,6 @@ async function main() {
     return;
   }
   const pushPayload = github.context.payload;
-  core.info("pushPayload");
-  core.info(pushPayload);
 
   const commits =
     process.env.COMMITS != null
