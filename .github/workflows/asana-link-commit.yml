@@ -12,6 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Link commit with Asana
-        uses: eithanshavit/asana-link-commit-gh-action@v1.12
+        uses: eithanshavit/asana-link-commit-gh-action@v1.13
         with:
           asana-pat: "TEST-ASANA-PAT"

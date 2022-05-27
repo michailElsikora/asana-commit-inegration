@@ -49,21 +49,18 @@ async function processCommit(asanaClient, commit) {
 }
 
 async function main() {
-  core.info(`github.context.eventName: ${github.context.eventName}`);
-  if (github.context.eventName === "push") {
-    const pushPayload = github.context.payload;
-    core.info(`The head commit is: ${pushPayload.head_commit}`);
-  }
-
-  if (!process.env.TEST && github.context.event_name != "push") {
+  if (!process.env.TEST && github.context.eventNam !== "push") {
     core.setFailed("Action must be triggered with push event");
     return;
   }
+  const pushPayload = github.context.payload;
+  core.info("pushPayload");
+  core.info(pushPayload);
 
   const commits =
     process.env.COMMITS != null
       ? JSON.parse(process.env.COMMITS)
-      : github.context.event.commits;
+      : [pushPayload.head_commit];
   if (!Array.isArray(commits) || !commits.length) {
     core.setFailed("Unable to read commits from event");
     return;
