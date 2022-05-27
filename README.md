@@ -27,7 +27,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Link to Asana
-      uses: eithanshavit/asana-github-action@v1
+      uses: eithanshavit/link-asana-commit-gh-action@v2
       with:
         asana-pat: <your Asana private token>
 
