@@ -23,7 +23,7 @@ async function writeComment(asanaClient, taskId, comment) {
 
 function extractTaskID(commitMessage) {
   const regex = new RegExp(
-    "ASANA: (https:\\/\\/app\\.asana\\.com\\/(\\d+)\\/(?<project>\\d+)\\/(?<task>\\d+).*?)",
+    "TASK.+(https:\\/\\/app\\.asana\\.com\\/(\\d+)\\/(?<project>\\d+)\\/(?<task>\\d+).*?)",
     "gm"
   );
 
@@ -41,7 +41,7 @@ function extractTaskID(commitMessage) {
 }
 
 async function processCommit(asanaClient, commit) {
-  core.info("Processing commit ", commit.url);
+  core.info("Processing commit " + commit.url);
   const taskId = extractTaskID(commit.message);
   if (taskId) {
     writeComment(asanaClient, taskId, "Referenced by: " + commit.url);
@@ -60,10 +60,12 @@ async function main() {
   }
   const pushPayload = github.context.payload;
 
+  let payloadCommits = pushPayload.commits;
+  payloadCommits.push(pushPayload.head_commit);
   const commits =
     process.env.COMMITS != null
       ? JSON.parse(process.env.COMMITS)
-      : [pushPayload.head_commit];
+      : payloadCommits;
   if (!Array.isArray(commits) || !commits.length) {
     core.setFailed("Unable to read commits from event");
     return;
