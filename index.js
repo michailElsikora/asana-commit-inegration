@@ -1,6 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const asana = require("asana");
+const archy = require("archy");
 
 async function writeComment(asanaClient, taskId, comment) {
   try {
@@ -50,9 +51,7 @@ async function processCommit(asanaClient, commit) {
 
 async function main() {
   core.info("github.context");
-  core.info(github.context.event_name);
-  core.info(github.event);
-  core.info(github.event.commits);
+  core.info(archy(github));
   if (!process.env.TEST && github.context.event_name != "push") {
     core.setFailed("Action must be triggered with push event");
     return;

@@ -1,6 +1,6 @@
 {
   "name": "link-asana-commit-gh-action",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "A Github action to link a pushed commit to an Asana task",
   "main": "dist/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "@actions/core": "^1.2.5",
     "@actions/github": "^5.0.3",
+    "archy": "^1.0.0",
     "asana": "^0.18.14"
   },
   "devDependencies": {
