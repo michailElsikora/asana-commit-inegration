@@ -15,7 +15,7 @@ This action links a Github commit with an Asana task as provided by the commit's
 Setup a Github Action:
 
 ```
-name: LinkComitToAsanaTask
+name: LinkCommitToAsanaTask
 
 on:
   push:
