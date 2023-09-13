@@ -1,4 +1,4 @@
-# link-asana-commit-gh-action
+# asana-commit-inegration
 
 We often want to submit code that refers to tasks in Asana.
 
