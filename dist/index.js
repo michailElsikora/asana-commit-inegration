@@ -74319,7 +74319,7 @@ const core = __nccwpck_require__(6024);
 const github = __nccwpck_require__(5016);
 const asana = __nccwpck_require__(1335);
 
-async function writeComment(asanaClient, taskId, comment) {
+async function writeComment(asanaClient, taskId, commit) {
   try {
     await asanaClient.tasks.findById(taskId);
   } catch (error) {
