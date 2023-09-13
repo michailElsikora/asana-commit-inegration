@@ -94,7 +94,7 @@ async function main() {
 
 
 try {
-  testAsanRichText();
+  main();
 } catch (error) {
   core.setFailed(error.message);
 }
