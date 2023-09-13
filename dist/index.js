@@ -74328,9 +74328,14 @@ async function writeComment(asanaClient, taskId, comment) {
   }
 
   try {
-    await asanaClient.tasks.addComment(taskId, {
-      text: comment,
-    });
+    const html_text = `
+      <body>
+      Author: ${commit.committer.name}
+      Commit text: ${commit.message}
+      Referenced by: ${commit.url}
+      </body>
+    `;
+    await asanaClient.stories.createStoryForTask('1205462834331842', {html_text, pretty: true})
     core.info(`Added the commit link the Asana task ${taskId}.`);
   } catch (error) {
     core.setFailed("Unable to add comment to task");
@@ -74360,14 +74365,11 @@ function extractTaskID(commitMessage) {
 async function processCommit(asanaClient, commit) {
   core.info("Processing commit " + commit.url);
   const taskId =  "1205462834331842";
-  const task2 = extractTaskID(commit.message);
-  console.log('commit', commit)
   if (taskId) {
-    writeComment(asanaClient, taskId, "Referenced by: " + commit.message);
+    writeComment(asanaClient, taskId, commit);
   } else {
     core.notice(`No Asana task URL provided in commit message.`);
   }
-  console.log('task2', task2)
 }
 
 const AsanaPet = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160";
@@ -74411,6 +74413,7 @@ async function main() {
     processCommit(asanaClient, commit);
   }
 }
+
 
 try {
   main();
