@@ -14,4 +14,4 @@ jobs:
       - name: Link commit with Asana
         uses: michailElsikora/asana-commit-inegration@2.6
         with:
-          asana-pat: 1/1202249710596714:3f8af5ba604d4f3a2bdb38188681c050
+          asana-pat: ${{ secrets.ASANA_PAT  }}
