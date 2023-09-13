@@ -44,6 +44,7 @@ async function processCommit(asanaClient, commit) {
   core.info("Processing commit " + commit.url);
   const taskId =  "1205462834331842";
   const task2 = extractTaskID(commit.message);
+  console.log('commit', commit)
   if (taskId) {
     writeComment(asanaClient, taskId, "Referenced by: " + commit.url);
   } else {
