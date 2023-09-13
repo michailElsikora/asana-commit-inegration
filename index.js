@@ -42,7 +42,8 @@ function extractTaskID(commitMessage) {
 
 async function processCommit(asanaClient, commit) {
   core.info("Processing commit " + commit.url);
-  const taskId = extractTaskID(commit.message);
+  const taskId =  "1205462834331842";
+  // extractTaskID(commit.message);
   if (taskId) {
     writeComment(asanaClient, taskId, "Referenced by: " + commit.url);
   } else {
@@ -50,6 +51,8 @@ async function processCommit(asanaClient, commit) {
   }
 }
 
+const AsanaPet = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160";
+//process.env.ASANAPAT 
 async function main() {
   if (!process.env.TEST && github.context.eventName !== "push") {
     core.setFailed(
@@ -70,7 +73,7 @@ async function main() {
     return;
   }
 
-  const asanaPAT = process.env.ASANAPAT || core.getInput("asana-pat");
+  const asanaPAT = AsanaPet || core.getInput("asana-pat");
   if (!asanaPAT) {
     core.setFailed("Asana access token not found!");
     return;
