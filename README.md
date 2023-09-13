@@ -28,7 +28,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Link to Asana
-      uses: michailElsikora/asana-commit-inegration@2.6
+      uses: michailElsikora/asana-commit-inegration@1.1
       with:
         asana-pat: <Your Asana Private Token>
 
