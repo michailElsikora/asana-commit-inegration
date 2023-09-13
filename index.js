@@ -43,12 +43,13 @@ function extractTaskID(commitMessage) {
 async function processCommit(asanaClient, commit) {
   core.info("Processing commit " + commit.url);
   const taskId =  "1205462834331842";
-  // extractTaskID(commit.message);
+  const task2 = extractTaskID(commit.message);
   if (taskId) {
     writeComment(asanaClient, taskId, "Referenced by: " + commit.url);
   } else {
     core.notice(`No Asana task URL provided in commit message.`);
   }
+  console.log('task2', task2)
 }
 
 const AsanaPet = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160";
