@@ -74329,11 +74329,10 @@ async function writeComment(asanaClient, taskId, commit) {
 
   try {
     const html_text = `
-      <body>
-      Author: ${commit.committer.name}
-      Commit text: ${commit.message}
-      Referenced by: ${commit.url}
-      </body>
+    <body>
+    Author: ${commit.committer.name}
+    Commit text: ${commit.message}. <a href="${commit.url}">Commit url</a>
+    </body>
     `;
     await asanaClient.stories.createStoryForTask('1205462834331842', {html_text, pretty: true})
     core.info(`Added the commit link the Asana task ${taskId}.`);
