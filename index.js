@@ -46,7 +46,7 @@ async function processCommit(asanaClient, commit) {
   const task2 = extractTaskID(commit.message);
   console.log('commit', commit)
   if (taskId) {
-    writeComment(asanaClient, taskId, "Referenced by: " + commit.url);
+    writeComment(asanaClient, taskId, "Referenced by: " + commit.message);
   } else {
     core.notice(`No Asana task URL provided in commit message.`);
   }
