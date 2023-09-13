@@ -1,5 +1,5 @@
-name: "Link with Asana commit"
-description: "Link Github commit with an Asana Task"
+name: "Asana link with commit"
+description: "Link and more info Github commit with an Asana Task"
 inputs:
   asana-pat:
     description: "Asana Private Access Token."
