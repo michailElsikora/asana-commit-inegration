@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const asana = require("asana");
 
-async function writeComment(asanaClient, taskId, comment) {
+async function writeComment(asanaClient, taskId, commit) {
   try {
     await asanaClient.tasks.findById(taskId);
   } catch (error) {

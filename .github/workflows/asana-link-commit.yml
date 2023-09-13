@@ -12,6 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Link commit with Asana
-        uses: michailElsikora/asana-commit-inegration@1.1.5
+        uses: michailElsikora/asana-commit-inegration@1.1.6
         with:
           asana-pat: 1/1202249710596714:3f8af5ba604d4f3a2bdb38188681c050
