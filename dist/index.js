@@ -74338,25 +74338,6 @@ async function writeComment(asanaClient, taskId, commit) {
   }
 }
 
-function extractTaskID(commitMessage) {
-  const regex = new RegExp(
-    "TASK.+(https:\\/\\/app\\.asana\\.com\\/(\\d+)\\/(?<project>\\d+)\\/(?<task>\\d+).*?)",
-    "gm"
-  );
-
-  let m;
-
-  while ((m = regex.exec(commitMessage)) !== null) {
-    if (m.index === regex.lastIndex) {
-      regex.lastIndex++;
-    }
-    if (m.groups.task) {
-      return m.groups.task;
-    }
-  }
-  return null;
-}
-
 
 //process.env.ASANAPAT 
 async function main() {
@@ -74369,15 +74350,14 @@ async function main() {
     pullStatus: pushPayload.pull_request.state,
   };
 
-  console.log(JSON.stringify(pushPayload))
 
-  const asanaPAT = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160"  || 0;
+  const asanaPAT = process.env.ASANAPAT || core.getInput("asana-pat");
   if (!asanaPAT) {
     core.setFailed("Asana access token not found!");
     return;
   }
 
-  const asanaProjectId = "1205497682404496" || 0;
+  const asanaProjectId = process.env.ASANAPROJECT || core.getInput("asana-project");
   if (!asanaProjectId) {
     core.setFailed("Asana project id  not found!");
     return;
