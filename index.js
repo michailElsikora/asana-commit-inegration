@@ -53,17 +53,12 @@ async function processCommit(asanaClient, commit) {
 //process.env.ASANAPAT 
 async function main() {
   const pushPayload = github.context.payload;
-
-  console.log(JSON.stringify(github));
-
-  let payloadCommits = pushPayload.commits;
-  const commits =
-    process.env.COMMITS != null
-      ? JSON.parse(process.env.COMMITS)
-      : payloadCommits;
-  if (!Array.isArray(commits) || !commits.length) {
-    core.setFailed("Unable to read commits from event");
-    return;
+  const commitData = {
+    title: pushPayload.pull_request.title,
+    author: pushPayload.sender.login,
+    body: pushPayload.pull_request.body,
+    pullLink: pushPayload.pull_request.html_url,
+    pullStatus: pushPayload.pull_request.state,
   }
 
   const asanaPAT = core.getInput("asana-pat");
@@ -87,17 +82,15 @@ async function main() {
     return;
   }
 
-  for (const commit of commits) {
-    createAsanaTask(asanaClient, asanaProjectId, commit);
-  }
+  createAsanaTask(asanaClient, asanaProjectId, commitData);
 }
 
 
 const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
-  const text = `Author: ${commit.committer.name}\nCommit text: ${commit.message}\nCommit url: ${commit.url}`;
+  const text = `Сделал пулл реквест: ${commit.author}\nОписание: ${commit.body}\nСсылка на пулл реквест: ${commit.pullLink}\nСтатус пулл реквеста: ${commit.pullStatus}`;
   const task = {
     workspace: "1203322908804151",
-    name: `${commit.committer.name} - ${new Date(commit.timestamp).toLocaleTimeString()}`,
+    name: `${commit.title}`,
     resource_subtype: "default_task",
     approval_status: "pending",
     assignee_status: "later",
