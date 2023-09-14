@@ -4,6 +4,9 @@ inputs:
   asana-pat:
     description: "Asana Private Access Token."
     required: true
+  asana-project:
+    description: "Asana project guid."
+    required: true
 branding:
   icon: "at-sign"
   color: "gray-dark"

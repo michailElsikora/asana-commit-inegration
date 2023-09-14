@@ -74395,6 +74395,12 @@ async function main() {
     return;
   }
 
+  const asanaProjectId = "1205497682404496" || 0;
+  if (!asanaProjectId) {
+    core.setFailed("Asana project id  not found!");
+    return;
+  }
+
   const asanaClient = asana.Client.create({
     defaultHeaders: { "asana-enable": "new-sections,string_ids" },
     logAsanaChangeWarnings: false,
@@ -74405,8 +74411,38 @@ async function main() {
   }
 
   for (const commit of commits) {
-    processCommit(asanaClient, commit);
+    createAsanaTask(asanaClient, asanaProjectId, commit);
   }
+}
+
+
+const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
+  const text = `Author: ${commit.committer.name}\nCommit text: ${commit.message}\nCommit url: ${commit.url}`;
+
+  const task = {
+    workspace: "1203322908804151",
+    name: `${commit.committer.name} - ${new Date(commit.timestamp).toLocaleTimeString()}`,
+    resource_subtype: "default_task",
+    approval_status: "pending",
+    assignee_status: "later",
+    completed: false,
+    projects: [
+      asanaProjectId
+    ],
+    html_notes: `<body>${text}</body>`,
+    pretty: true,
+  };
+
+  try {
+    await asanaClient.tasks.createTask(task)
+    core.info(`Added the commit link the Asana project ${asanaProjectId}.`);
+  } catch (error) {
+    console.log('error', error);
+    core.setFailed("Unable to add comment to task");
+    return;
+  }
+
+
 }
 
 
