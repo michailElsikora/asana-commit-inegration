@@ -117,7 +117,7 @@ const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
     await asanaClient.tasks.createTask(task)
     core.info(`Added the commit link the Asana project ${asanaProjectId}.`);
   } catch (error) {
-    console.log('error', error);
+    console.log('errorClient', error);
     core.setFailed("Unable to add comment to task");
     return;
   }
