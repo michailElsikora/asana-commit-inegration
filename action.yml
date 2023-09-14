@@ -7,6 +7,9 @@ inputs:
   asana-project:
     description: "Asana project guid."
     required: true
+  asana-workspace:
+    description: "Asana project guid."
+    required: true
 branding:
   icon: "at-sign"
   color: "gray-dark"

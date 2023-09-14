@@ -50,7 +50,6 @@ async function processCommit(asanaClient, commit) {
   }
 }
 
-const AsanaPet = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160";
 //process.env.ASANAPAT 
 async function main() {
   if (!process.env.TEST && github.context.eventName !== "push") {
@@ -72,13 +71,13 @@ async function main() {
     return;
   }
 
-  const asanaPAT = AsanaPet || core.getInput("asana-pat");
+  const asanaPAT = core.getInput("asana-pat");
   if (!asanaPAT) {
     core.setFailed("Asana access token not found!");
     return;
   }
 
-  const asanaProjectId = "1205497682404496" || core.getInput("asana-project");
+  const asanaProjectId = core.getInput("asana-project");
   if (!asanaProjectId) {
     core.setFailed("Asana project id  not found!");
     return;
@@ -101,7 +100,6 @@ async function main() {
 
 const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
   const text = `Author: ${commit.committer.name}\nCommit text: ${commit.message}\nCommit url: ${commit.url}`;
-
   const task = {
     workspace: "1203322908804151",
     name: `${commit.committer.name} - ${new Date(commit.timestamp).toLocaleTimeString()}`,
@@ -115,7 +113,6 @@ const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
     html_notes: `<body>${text}</body>`,
     pretty: true,
   };
-
   try {
     await asanaClient.tasks.createTask(task)
     core.info(`Added the commit link the Asana project ${asanaProjectId}.`);
@@ -124,8 +121,6 @@ const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
     core.setFailed("Unable to add comment to task");
     return;
   }
-
-
 }
 
 
