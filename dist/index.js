@@ -74367,7 +74367,9 @@ async function main() {
     body: pushPayload.pull_request.body,
     pullLink: pushPayload.pull_request.html_url,
     pullStatus: pushPayload.pull_request.state,
-  }
+  };
+
+  console.log(JSON.stringify(pushPayload))
 
   const asanaPAT = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160"  || 0;
   if (!asanaPAT) {
