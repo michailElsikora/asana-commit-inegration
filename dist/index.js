@@ -74375,7 +74375,7 @@ async function main() {
     return;
   }
 
-  const asanaProjectId = core.getInput("asana-project");
+  const asanaProjectId = "1205497682404496" || 0;
   if (!asanaProjectId) {
     core.setFailed("Asana project id  not found!");
     return;
