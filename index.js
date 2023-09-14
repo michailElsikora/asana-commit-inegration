@@ -40,15 +40,6 @@ function extractTaskID(commitMessage) {
   return null;
 }
 
-async function processCommit(asanaClient, commit) {
-  core.info("Processing commit " + commit.url);
-  const taskId =  "1205462834331842";
-  if (taskId) {
-    writeComment(asanaClient, taskId, commit);
-  } else {
-    core.notice(`No Asana task URL provided in commit message.`);
-  }
-}
 
 //process.env.ASANAPAT 
 async function main() {
@@ -61,7 +52,7 @@ async function main() {
     pullStatus: pushPayload.pull_request.state,
   }
 
-  const asanaPAT = core.getInput("asana-pat");
+  const asanaPAT = "1/1203956910529809:999b87579f9305e6ba0c45e4c0760160"  || core.getInput("asana-pat");
   if (!asanaPAT) {
     core.setFailed("Asana access token not found!");
     return;
