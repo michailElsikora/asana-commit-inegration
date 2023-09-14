@@ -15,7 +15,7 @@ async function writeComment(asanaClient, taskId, commit) {
     await asanaClient.stories.createStoryForTask('1205462834331842', {text, pretty: true})
     core.info(`Added the commit link the Asana task ${taskId}.`);
   } catch (error) {
-    console.log('error', error);
+    console.log('e', error);
     core.setFailed("Unable to add comment to task");
     return;
   }
