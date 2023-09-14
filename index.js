@@ -52,14 +52,9 @@ async function processCommit(asanaClient, commit) {
 
 //process.env.ASANAPAT 
 async function main() {
-  if (!process.env.TEST && github.context.eventName !== "push") {
-    core.setFailed(
-      "Action must be triggered with push event. It is " +
-        github.context.eventName
-    );
-    return;
-  }
   const pushPayload = github.context.payload;
+
+  console.log(JSON.stringify(github));
 
   let payloadCommits = pushPayload.commits;
   const commits =
