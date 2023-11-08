@@ -58,6 +58,7 @@ async function main() {
   createAsanaTask(asanaClient, asanaProjectId, commitData);
 }
 
+console.log('tesrt')
 
 const createAsanaTask = async (asanaClient, asanaProjectId, commit) => {
   const text = `Сделал пулл реквест: ${commit.author}\nОписание: ${commit.body}\nСсылка на пулл реквест: ${commit.pullLink}\nСтатус пулл реквеста: ${commit.pullStatus}`;
